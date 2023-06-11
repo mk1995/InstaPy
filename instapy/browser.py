@@ -113,17 +113,30 @@ def set_selenium_local_session(
     firefox_profile.set_preference("dom.webdriver.enabled", False)
     firefox_profile.set_preference("useAutomationExtension", False)
     firefox_profile.set_preference("general.platform.override", "iPhone")
-    firefox_profile.update_preferences()
+#     firefox_profile.update_preferences()
 
+#     # geckodriver log in specific user logfolder
+#     geckodriver_log = "{}geckodriver.log".format(logfolder)
+
+#     # prefer user path before downloaded one
+#     driver_path = geckodriver_path or get_geckodriver()
+#     browser = webdriver.Firefox(
+#         firefox_profile=firefox_profile,
+#         executable_path=driver_path,
+#         log_path=geckodriver_log,
+#         options=firefox_options,
+#     )
+
+    firefox_options.profile = firefox_profile
     # geckodriver log in specific user logfolder
     geckodriver_log = "{}geckodriver.log".format(logfolder)
 
     # prefer user path before downloaded one
     driver_path = geckodriver_path or get_geckodriver()
+    ser = FirefoxService(executable_path=driver_path, log_path=geckodriver_log)
     browser = webdriver.Firefox(
-        firefox_profile=firefox_profile,
-        executable_path=driver_path,
-        log_path=geckodriver_log,
+        # firefox_profile=firefox_profile,
+        service=ser,
         options=firefox_options,
     )
 
